@@ -41,7 +41,7 @@ export default function Home() {
   >(null);
   const [ticketPrice, setTicketPrice] = useState<string | null>(null);
   const [ticketCommission, setTicketCommision] = useState<string | null>(null);
-  const [expiration, setExpiration] = useState<number | null>(null);
+  const [expiration, setExpiration] = useState<string | null>(null);
   const [lastWinner, setLastWinner] = useState<string | null>(null);
   const [lastWinnerAmount, setLastWinnerAmount] = useState<string | null>(null);
   const [lotteryOperator, setLotteryOperator] = useState<string | null>(null);
@@ -181,7 +181,7 @@ export default function Home() {
       setCurrentWinningReward(String(winning));
       setTicketPrice(String(ticketPric));
       setTicketCommision(String(ticketCommission));
-      setExpiration(Number(expiration));
+      setExpiration(String(expiration));
       setUserTickets(Number(noOfUserTickets))
       setWinnings(Number(winner));
       setLastWinner(String(lastWinner))
@@ -596,7 +596,7 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-5 mb-3">
-                  {expiration && <Countdown date={new Date(expiration*1000)} renderer={renderer} />}
+                  {expiration && <Countdown date={new Date(Number(expiration)*1000)} renderer={renderer} />}
           </div>
         </div>
 
@@ -647,7 +647,7 @@ export default function Home() {
               </div>
             </div>
 
-            <button disabled={!address || (expiration && expiration<Date.now() )|| remainingTickets ===0} onClick={handleClick} className="mt-5 w-full bg-gradient-to-br from-orange-500 to-emerald-600 px-10 py-5 rounded-md text-white shadow-xl disabled:from-gray-600 disabled:text-gray-100 disabled:to-gray-600 disabled:cursor-not-allowed font-semibold">
+            <button disabled={!address || (expiration && expiration<Date.now().toString() )|| remainingTickets ===0} onClick={handleClick} className="mt-5 w-full bg-gradient-to-br from-orange-500 to-emerald-600 px-10 py-5 rounded-md text-white shadow-xl disabled:from-gray-600 disabled:text-gray-100 disabled:to-gray-600 disabled:cursor-not-allowed font-semibold">
               Buy {quantity} Ticket/s
             </button>
           </div>
