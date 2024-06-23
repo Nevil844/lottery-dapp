@@ -41,7 +41,7 @@ export default function Home() {
   >(null);
   const [ticketPrice, setTicketPrice] = useState<string | null>(null);
   const [ticketCommission, setTicketCommision] = useState<string | null>(null);
-  const [expiration, setExpiration] = useState<string | null>(null);
+  const [expiration, setExpiration] = useState<number | null>(null);
   const [lastWinner, setLastWinner] = useState<string | null>(null);
   const [lastWinnerAmount, setLastWinnerAmount] = useState<string | null>(null);
   const [lotteryOperator, setLotteryOperator] = useState<string | null>(null);
@@ -134,6 +134,7 @@ export default function Home() {
       const winner = await readContract({ 
         contract, 
         method: "function getWinningsForAddress(address addr) view returns (uint256)", 
+        // @ts-ignore 
         params: [address] 
       })
 
@@ -142,7 +143,7 @@ export default function Home() {
         method: "function getTickets() view returns (address[])", 
         params: [] 
       })
-
+      // @ts-ignore 
       const totalTickets: string[]=tickets;
 
       const noOfUserTickets=totalTickets.reduce(
@@ -180,7 +181,7 @@ export default function Home() {
       setCurrentWinningReward(String(winning));
       setTicketPrice(String(ticketPric));
       setTicketCommision(String(ticketCommission));
-      setExpiration(String(expiration));
+      setExpiration(Number(expiration));
       setUserTickets(Number(noOfUserTickets))
       setWinnings(Number(winner));
       setLastWinner(String(lastWinner))
@@ -232,6 +233,7 @@ export default function Home() {
       console.log("Transaction Hash:", txReceipt.transactionHash);
     } catch (err) {
       // Improved error handling
+      // @ts-ignore 
       if (err.code === -32603 || err.message.includes("execution reverted")) {
         toast.error("Network Busy. Transaction reverted. Please retry.", { id: notification });
       } else {
@@ -286,6 +288,7 @@ export default function Home() {
       console.log("Transaction Hash:", txReceipt.transactionHash);
     } catch (err) {
       // Improved error handling
+      // @ts-ignore 
       if (err.code === -32603 || err.message.includes("execution reverted")) {
         toast.error("Network Busy. Transaction reverted. Please Retry.", { id: notification });
       } else {
@@ -364,6 +367,7 @@ export default function Home() {
       console.log("Transaction Hash:", receipt.transactionHash);
     } catch (err) {
       // Improved error handling
+      // @ts-ignore 
       if (err.code === -32603 || err.message.includes("execution reverted")) {
         toast.error("Network Busy. Transaction reverted. Please Retry.", { id: notification });
       } else {
@@ -406,6 +410,7 @@ export default function Home() {
       console.log("Transaction Hash:", receipt.transactionHash);
     } catch (err) {
       // Improved error handling
+      // @ts-ignore 
       if (err.code === -32603 || err.message.includes("execution reverted")) {
         toast.error("Network Busy. Transaction reverted. Please Retry.", { id: notification });
       } else {
@@ -447,6 +452,7 @@ export default function Home() {
       console.log("Transaction Hash:", receipt.transactionHash);
     } catch (err) {
       // Improved error handling
+      // @ts-ignore 
       if (err.code === -32603 || err.message.includes("execution reverted")) {
         toast.error("Network Busy. Transaction reverted. Please Retry.", { id: notification });
       } else {
@@ -488,6 +494,7 @@ export default function Home() {
       console.log("Transaction Hash:", receipt.transactionHash);
     } catch (err) {
       // Improved error handling
+      // @ts-ignore 
       if (err.code === -32603 || err.message.includes("execution reverted")) {
         toast.error("Network Busy. Transaction reverted. Please Retry.", { id: notification });
       } else {
@@ -589,7 +596,7 @@ export default function Home() {
             </div>
           </div>
           <div className="mt-5 mb-3">
-                  <Countdown date={new Date(expiration*1000)} renderer={renderer} />
+                  {expiration && <Countdown date={new Date(expiration*1000)} renderer={renderer} />}
           </div>
         </div>
 
@@ -640,7 +647,7 @@ export default function Home() {
               </div>
             </div>
 
-            <button disabled={!address || (expiration && expiration<Date.now().toString() )|| remainingTickets ===0} onClick={handleClick} className="mt-5 w-full bg-gradient-to-br from-orange-500 to-emerald-600 px-10 py-5 rounded-md text-white shadow-xl disabled:from-gray-600 disabled:text-gray-100 disabled:to-gray-600 disabled:cursor-not-allowed font-semibold">
+            <button disabled={!address || (expiration && expiration<Date.now() )|| remainingTickets ===0} onClick={handleClick} className="mt-5 w-full bg-gradient-to-br from-orange-500 to-emerald-600 px-10 py-5 rounded-md text-white shadow-xl disabled:from-gray-600 disabled:text-gray-100 disabled:to-gray-600 disabled:cursor-not-allowed font-semibold">
               Buy {quantity} Ticket/s
             </button>
           </div>

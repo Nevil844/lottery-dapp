@@ -1,9 +1,12 @@
 import React from "react";
-import {useMetamask} from "@thirdweb-dev/react"
+import { useMetamask } from "@thirdweb-dev/react";
 
 function Login() {
+  const connectWithMetamask = useMetamask();
 
-    const connectWithMetamask=useMetamask();
+  const handleClick = (event:any) => {
+    connectWithMetamask(); // Call connectWithMetamask function when button is clicked
+  };
 
   return (
     <div className="bg-[#091B18] min-h-screen flex flex-col items-center justify-center text-center">
@@ -15,8 +18,12 @@ function Login() {
         />
         <h1 className="text-6xl text-white font-bold">THE JACKPOT JUNCTION</h1>
         <h2 className="text-white">Get Started By logging in with your MetaMask</h2>
-        <button onClick={connectWithMetamask} 
-        className="bg-white px-8 py-5 mt-10 rouded-lg shadow-lg font-bold">Login with Metamask</button>
+        <button
+          onClick={handleClick} // Use handleClick function as onClick event handler
+          className="bg-white px-8 py-5 mt-10 rounded-lg shadow-lg font-bold"
+        >
+          Login with Metamask
+        </button>
       </div>
     </div>
   );
