@@ -28,7 +28,7 @@ export default function Home() {
     address: "0x38a65E941988a761Cb44C0D11c60e2FA3825e484",
   });
 
-  const address = useAddress() ?? "";
+  const address = useAddress();
 
   // const {contract, isLoading}=useContract(
   //   process.env.NEXT_PUBLIC_LOTTERY_CONTRACT_ADDRESS
@@ -134,7 +134,7 @@ export default function Home() {
       const winner = await readContract({ 
         contract, 
         method: "function getWinningsForAddress(address addr) view returns (uint256)", 
-        params: [address as `0x${string}`] 
+        params: [address??""] 
       })
 
       const tickets = await readContract({ 
