@@ -134,7 +134,7 @@ export default function Home() {
       const winner = await readContract({ 
         contract, 
         method: "function getWinningsForAddress(address addr) view returns (uint256)", 
-        params: [address] 
+        params: [address as `0x${string}`] 
       })
 
       const tickets = await readContract({ 
