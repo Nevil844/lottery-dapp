@@ -134,7 +134,8 @@ export default function Home() {
       const winner = await readContract({ 
         contract, 
         method: "function getWinningsForAddress(address addr) view returns (uint256)", 
-        params: [address??""] 
+        // @ts-ignore 
+        params: [address] 
       })
 
       const tickets = await readContract({ 
@@ -197,7 +198,7 @@ export default function Home() {
   // Fetch data when the component mounts
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [address]);
 
 
 
